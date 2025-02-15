@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support</title>
+    <style>
+        /* Body and Background */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating particles */
+        .background-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px);
+                opacity: 0;
+            }
+        }
+
+        /* Random particle positions */
+        .particle:nth-child(1) { left: 10%; animation-duration: 12s; }
+        .particle:nth-child(2) { left: 30%; animation-duration: 10s; }
+        .particle:nth-child(3) { left: 50%; animation-duration: 14s; }
+        .particle:nth-child(4) { left: 70%; animation-duration: 11s; }
+        .particle:nth-child(5) { left: 90%; animation-duration: 13s; }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .typing-wrapper {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+            height: 30px;
+            margin: 20px 0;
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            border-right: 3px solid rgba(0, 0, 0, 0.75);
+            white-space: nowrap;
+            animation: caret 0.7s steps(1) infinite;
+        }
+
+        @keyframes type {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes caret {
+            50% { border-color: transparent; }
+            100% { border-color: black; }
+        }
+
+        .dynamic-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: type 3s steps(30) infinite;
+        }
+
+        .contact-details {
+            margin-top: 30px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .contact-details a {
+            color: #4CAF50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover {
+            color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <h1>Customer Support</h1>
+        
+        <div class="typing-wrapper">
+            <span class="dynamic-text"></span>
+        </div>
+
+        <div class="contact-details">
+            <p>Feel free to reach out to us through any of the following:</p>
+            <p><strong>Email:</strong> <a href="mailto:APPprojectDemo@example.com">APPprojectDemo@example.com</a></p>
+            <p><strong>Contact Number:</strong> <a href="tel:+910000000000">+91 0000000000</a></p>
+            <p><strong>Instagram:</strong> <a href="https://instagram.com/DemoAPP" target="_blank">@APPdemoProject</a></p>
+        </div>
+    </div>
+
+    <script>
+        const texts = [
+            'Instagram: @APPdemoProject',
+            'Contact:  +91 00000000000',
+            'Email: support@APPprojectDemo.com'
+        ];
+
+        let index = 0;
+        let textIndex = 0;
+        let currentText = '';
+        let isDeleting = false;
+        const typingSpeed = 100;
+        const erasingSpeed = 60;
+        const delayBetweenTexts = 2000;
+
+        function type() {
+            const element = document.querySelector('.dynamic-text');
+            if (isDeleting) {
+                currentText = texts[textIndex].substring(0, currentText.length - 1);
+            } else {
+                currentText = texts[textIndex].substring(0, currentText.length + 1);
+            }
+
+            element.textContent = currentText;
+
+            // If the current text is complete
+            if (!isDeleting && currentText === texts[textIndex]) {
+                setTimeout(() => isDeleting = true, delayBetweenTexts);
+            } else if (isDeleting && currentText === '') {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+            }
+
+            const speed = isDeleting ? erasingSpeed : typingSpeed;
+            setTimeout(type, speed);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(type, 1000); // Start typing after a short delay
+        });
+    </script>
+
+</body>
+</html>

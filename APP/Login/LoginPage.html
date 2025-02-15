@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <h2><i class="fas fa-user-circle"></i> Welcome Back</h2>
+
+        <!-- Login form with id userForm -->
+        <form id="userForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit" class="login-button">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+
+            <a href="#" class="forgot-password">Forgot Password?</a>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value; // Get password value
+
+            // Make a fetch request to submit the form
+            fetch('http://localhost:8080/"D:/Project/APP/Login/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: username, password: password })
+            })
+
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json(); // Parse JSON response
+            })
+            .then(data => {
+                console.log(data); // Handle successful response
+                // Optionally redirect or show a message based on response
+            })
+            .catch(error => console.error('Error:', error)); // Handle error
+        });
+    </script>
+</body>
+</html>
